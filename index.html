@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bijak Memilih Makanan - Healthy Food Challenge</title>
+  <style>
+    :root {
+      --hijau-tua: #354a2c;
+      --hijau: #6b8e3d;
+      --hijau-muda: #a9c26a;
+      --kuning: #f7d46e;
+      --oranye: #e8833a;
+      --putih: #ffffff;
+      --krem: #fbf8ef;
+      --teks: #2d3a24;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Montserrat", "Segoe UI", Arial, sans-serif;
+      color: var(--teks);
+      background: var(--krem);
+      line-height: 1.7;
+    }
+    h1, h2, h3 { font-family: "Pacifico", "Brush Script MT", cursive; color: var(--hijau-tua); font-weight: normal; }
+    h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); text-align: center; margin-bottom: 1.5rem; }
+    section { padding: 4rem 1.5rem; }
+    .container { max-width: 1000px; margin: 0 auto; }
+
+    /* Navigasi */
+    nav {
+      position: sticky; top: 0; z-index: 10;
+      background: var(--hijau-tua);
+      padding: .8rem 1rem;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: .4rem 1rem;
+    }
+    nav a {
+      color: var(--putih); text-decoration: none; font-size: .9rem;
+      padding: .3rem .7rem; border-radius: 999px;
+    }
+    nav a:hover { background: var(--kuning); color: var(--hijau-tua); }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, var(--hijau-tua), var(--hijau));
+      color: var(--putih);
+      text-align: center;
+      padding: 6rem 1.5rem 5rem;
+    }
+    .hero .label {
+      letter-spacing: .2em; text-transform: uppercase; font-size: .9rem;
+      color: var(--kuning); font-weight: 700;
+    }
+    .hero h1 {
+      font-size: clamp(3rem, 9vw, 5.5rem);
+      color: var(--putih);
+      margin: .5rem 0 1rem;
+      text-shadow: 0 4px 0 rgba(0,0,0,.15);
+    }
+    .hero .anggota {
+      display: inline-block; background: var(--kuning); color: var(--hijau-tua);
+      font-weight: 700; padding: .6rem 1.4rem; border-radius: 999px; margin-top: 1.5rem;
+    }
+    .hero .slogan { font-style: italic; margin-top: 1rem; opacity: .9; }
+
+    /* Kartu */
+    .kartu {
+      background: var(--putih);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 8px 24px rgba(53,74,44,.1);
+    }
+    .grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .kartu h3 { font-size: 1.5rem; margin-bottom: .6rem; }
+    .kartu p + p { margin-top: .8rem; }
+
+    .bg-putih { background: var(--putih); }
+    .bg-hijau { background: var(--hijau-tua); color: var(--putih); }
+    .bg-hijau h2 { color: var(--kuning); }
+    .bg-hijau .kartu { background: rgba(255,255,255,.08); color: var(--putih); box-shadow: none; }
+    .bg-hijau .kartu h3 { color: var(--kuning); }
+
+    /* Menu */
+    .menu-besar { text-align: center; }
+    .menu-besar .ikon { font-size: 3rem; margin-bottom: .5rem; }
+    .tag {
+      display: inline-block; background: var(--hijau-muda); color: var(--hijau-tua);
+      font-size: .8rem; font-weight: 700; padding: .2rem .8rem; border-radius: 999px; margin-bottom: .6rem;
+    }
+    .tag.oranye { background: #fbd9bf; }
+
+    /* Daftar */
+    ol.profil { list-style: none; counter-reset: p; max-width: 520px; margin: 0 auto; }
+    ol.profil li {
+      counter-increment: p; background: var(--putih); margin-bottom: 1rem;
+      padding: 1rem 1.2rem 1rem 4rem; border-radius: 14px; position: relative;
+      font-weight: 600; box-shadow: 0 4px 14px rgba(53,74,44,.08);
+    }
+    ol.profil li::before {
+      content: counter(p); position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);
+      width: 2.2rem; height: 2.2rem; border-radius: 50%;
+      background: var(--kuning); color: var(--hijau-tua);
+      display: flex; align-items: center; justify-content: center; font-weight: 700;
+    }
+
+    /* Langkah */
+    .langkah { counter-reset: l; }
+    .langkah li {
+      counter-increment: l; list-style: none; position: relative;
+      padding-left: 3rem; margin-bottom: 1rem;
+    }
+    .langkah li::before {
+      content: counter(l); position: absolute; left: 0; top: 0;
+      width: 2rem; height: 2rem; border-radius: 50%;
+      background: var(--oranye); color: var(--putih);
+      display: flex; align-items: center; justify-content: center; font-weight: 700;
+    }
+
+    /* Kandungan */
+    .gizi-list { list-style: none; display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .8rem; }
+    .gizi-list li {
+      background: var(--krem); border: 1px solid var(--hijau-muda);
+      padding: .25rem .8rem; border-radius: 999px; font-size: .9rem;
+    }
+
+    .kutipan {
+      text-align: center; font-family: "Pacifico", cursive; font-size: 1.6rem;
+      color: var(--hijau-tua); padding: 2rem 1rem;
+    }
+
+    footer {
+      background: var(--hijau-tua); color: var(--putih); text-align: center;
+      padding: 3rem 1.5rem;
+    }
+    footer h2 { color: var(--kuning); font-size: 2.6rem; margin-bottom: .5rem; }
+    footer p { opacity: .85; }
+
+    @media (max-width: 600px) {
+      section { padding: 3rem 1rem; }
+      .kartu { padding: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#latar">Latar Belakang</a>
+  <a href="#menu">Menu</a>
+  <a href="#tujuan">Tujuan</a>
+  <a href="#inovatif">Inovasi</a>
+  <a href="#gizi">Kandungan Gizi</a>
+  <a href="#langkah">Pembuatan</a>
+  <a href="#manfaat">Manfaat</a>
+  <a href="#kesimpulan">Kesimpulan</a>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="label">Healthy Food Challenge</div>
+    <h1>Bijak Memilih Makanan</h1>
+    <p class="slogan">Be gentle with yourself</p>
+    <div class="anggota">Humaira, Naurah, Syavitri, Adelia, Faiz, Kahfi</div>
+  </div>
+</header>
+
+<section id="latar" class="bg-putih">
+  <div class="container">
+    <h2>Latar Belakang</h2>
+    <div class="kartu">
+      <p>Makanan merupakan kebutuhan penting bagi tubuh. Namun, masih banyak orang mengonsumsi makanan cepat saji dan tinggi gula tanpa memperhatikan kandungan gizinya. Oleh karena itu, kelompok kami memilih tema <strong>Bijak Memilih Makanan</strong> dengan membuat gimbap dan jus jeruk sebagai menu sehat yang praktis, mengenyangkan, dan bergizi.</p>
+    </div>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="container">
+    <h2>Rencana Menu Makanan Sehat</h2>
+    <div class="grid">
+      <div class="kartu menu-besar">
+        <div class="ikon">🍙</div>
+        <span class="tag">Menu Utama</span>
+        <h3>Gimbap</h3>
+        <p>Mengandung karbohidrat, protein, vitamin, dan serat dari nasi, ayam, telur, serta sayuran.</p>
+      </div>
+      <div class="kartu menu-besar">
+        <div class="ikon">🍊</div>
+        <span class="tag oranye">Minuman Sehat</span>
+        <h3>Jus Jeruk</h3>
+        <p>Mengandung vitamin C serta mineral yang dapat membantu menjaga daya tahan tubuh.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tujuan" class="bg-putih">
+  <div class="container">
+    <h2>Tujuan dan Manfaat</h2>
+    <div class="kartu">
+      <p>Kegiatan ini bertujuan meningkatkan kesadaran tentang pentingnya memilih makanan sehat dan bergizi, memberikan pengetahuan mengenai kandungan serta manfaat gizi, dan mengajak warga sekolah menerapkan pola makan sehat.</p>
+      <p>Selain itu, kegiatan ini bermanfaat untuk mengurangi kebiasaan mengonsumsi makanan kurang sehat, mendorong pemilihan makanan bergizi dan seimbang, serta mengembangkan kreativitas dalam mengolah dan menyajikan makanan.</p>
+    </div>
+  </div>
+</section>
+
+<section id="inovatif">
+  <div class="container">
+    <h2>Nilai Inovatif</h2>
+    <div class="kartu">
+      <p>Inovasi kegiatan ini adalah menyajikan makanan sehat dengan tampilan menarik, kreatif, dan harga terjangkau. Bahan makanan dimodifikasi agar lebih sehat, disertai informasi kandungan gizi dan manfaatnya.</p>
+    </div>
+  </div>
+</section>
+
+<section id="bijak" class="bg-putih">
+  <div class="container">
+    <h2>Bijak Memilih Makanan</h2>
+    <div class="kartu">
+      <p>Bijak memilih makanan berarti menentukan makanan yang baik bagi tubuh dengan memperhatikan kandungan gizi, kebersihan, dan kebutuhan tubuh. Kita perlu mengonsumsi karbohidrat, protein, lemak, vitamin, mineral, dan serat, memperbanyak sayur dan buah, serta membatasi gula, garam, dan lemak.</p>
+    </div>
+  </div>
+</section>
+
+<section id="gizi" class="bg-hijau">
+  <div class="container">
+    <h2>Kandungan Gizi</h2>
+    <div class="grid">
+      <div class="kartu">
+        <h3>Gimbap</h3>
+        <p>Terdiri dari nori, nasi putih, dada ayam, telur, timun, wortel, selada, dan wijen. Kandungan gizinya meliputi:</p>
+        <ul class="gizi-list">
+          <li>Karbohidrat</li><li>Protein</li><li>Lemak sehat</li><li>Vitamin</li><li>Mineral</li><li>Serat</li>
+        </ul>
+      </div>
+      <div class="kartu">
+        <h3>Jus Jeruk</h3>
+        <p>Terdiri dari jeruk, madu, air, dan biji selasih. Mengandung vitamin C, karbohidrat, serat, protein, dan mineral yang membantu menjaga kesehatan tubuh.</p>
+        <ul class="gizi-list">
+          <li>Vitamin C</li><li>Karbohidrat</li><li>Serat</li><li>Protein</li><li>Mineral</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="profil">
+  <div class="container">
+    <h2>Dimensi Profil Lulusan</h2>
+    <ol class="profil">
+      <li>Berolahraga</li>
+      <li>Makan Sehat dan Bergizi</li>
+      <li>Gemar Belajar</li>
+      <li>Bermasyarakat</li>
+    </ol>
+  </div>
+</section>
+
+<section id="langkah" class="bg-putih">
+  <div class="container">
+    <h2>Langkah-Langkah Pembuatan</h2>
+    <div class="grid">
+      <div class="kartu">
+        <h3>Gimbap</h3>
+        <ol class="langkah">
+          <li>Cuci dan potong sayuran.</li>
+          <li>Buat telur dadar.</li>
+          <li>Masak ayam hingga matang.</li>
+          <li>Campurkan nasi dengan minyak wijen dan garam.</li>
+          <li>Susun semua bahan di atas nori, gulung hingga padat.</li>
+          <li>Potong dan sajikan.</li>
+        </ol>
+      </div>
+      <div class="kartu">
+        <h3>Jus Jeruk</h3>
+        <ol class="langkah">
+          <li>Cuci jeruk, lalu belah.</li>
+          <li>Peras jeruk.</li>
+          <li>Tambahkan air dan madu secukupnya.</li>
+          <li>Sajikan dengan es batu.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="manfaat">
+  <div class="container">
+    <h2>Manfaat Menu bagi Kesehatan</h2>
+    <div class="kartu">
+      <p>Gimbap menyediakan karbohidrat dari nasi, protein dari ayam dan telur, serta vitamin dan serat dari sayuran.</p>
+      <p>Jus jeruk mengandung vitamin C yang membantu meningkatkan daya tahan tubuh, menyegarkan tubuh, dan mencegah kelelahan saat beraktivitas.</p>
+    </div>
+  </div>
+</section>
+
+<section id="kesimpulan" class="bg-putih">
+  <div class="container">
+    <h2>Kesimpulan</h2>
+    <div class="kartu">
+      <p>Kegiatan Healthy Food Challenge memberikan pengalaman dalam membuat makanan sehat dan bergizi. Gimbap dan jus jeruk membuktikan bahwa makanan sehat tidak harus mahal atau membosankan, tetapi bisa dibuat menarik dan kaya nutrisi.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Saran</h2>
+    <div class="kartu">
+      <p>Melalui kegiatan ini, siswa diharapkan lebih bijak memilih makanan, mengurangi makanan cepat saji dan minuman tinggi gula, serta membiasakan membaca informasi nilai gizi. Sekolah juga diharapkan terus mendukung edukasi gizi.</p>
+      <p>Selain itu, kelompok kami mendapat pengalaman mengembangkan kreativitas dalam mengolah bahan lokal menjadi makanan sehat serta belajar merencanakan pembagian tugas, waktu, dan anggaran dengan lebih baik.</p>
+    </div>
+  </div>
+</section>
+
+<div class="kutipan">"Be gentle with yourself"</div>
+
+<footer id="kesimpulan-akhir">
+  <h2>Thank You!</h2>
+  <p>Healthy Food Challenge - Bijak Memilih Makanan</p>
+</footer>
+
+</body>
+</html>
